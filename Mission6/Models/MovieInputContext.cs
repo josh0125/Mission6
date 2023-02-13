@@ -22,7 +22,7 @@ namespace Mission6.Models
                     InputID = 1,
                     Title = "Hitch",
                     Year= "2005",
-                    Category= "Comedy",
+                    CategoryID= 1,
                     Director= "Andy Tennant",
                     Rating= "PG-13",
                     Edited = true,
@@ -34,7 +34,7 @@ namespace Mission6.Models
                     InputID = 2,
                     Title = "Bourne Identity",
                     Year = "2002",
-                    Category = "Action",
+                    CategoryID = 1,
                     Director = "Doug Liman",
                     Rating = "PG-13"
                 },
@@ -43,7 +43,7 @@ namespace Mission6.Models
                     InputID = 3,
                     Title = "Dune",
                     Year = "2021",
-                    Category = "Action",
+                    CategoryID = 1,
                     Director = "Denis Villeneuve",
                     Rating = "PG-13"
                 }

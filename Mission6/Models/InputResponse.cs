@@ -16,8 +16,12 @@ namespace Mission6.Models
         public string Title { get; set; }
         [Required]
         public string Year { get; set; }
+
+        // Build Foreign Key
         [Required]
-        public string Category { get; set; }
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
+
         [Required]
         public string Director { get; set; }
         [Required]

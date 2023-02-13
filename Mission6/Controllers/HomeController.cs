@@ -11,32 +11,42 @@ namespace Mission6.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieInputContext _MovieInputContext { get; set; }
 
 
-        public HomeController(ILogger<HomeController> logger, MovieInputContext name)
+        public HomeController(MovieInputContext name)
         {
-            _logger = logger;
             _MovieInputContext = name;
         }
 
+        // Returns Index
         public IActionResult Index()
         {
             return View();
         }
 
+        // Returs Podcast Page
         public IActionResult Podcast()
         {
             return View();
         }
 
+        // Returns Index
+        public IActionResult Table()
+        {
+            var applications =_MovieInputContext.responses.ToList();
+            return View(applications);
+        }
+
+
+        //Returns Input Movie Page
         [HttpGet]
         public IActionResult Input()
         {
             return View();
         }
 
+        // Uploads to Database
         [HttpPost]
         public IActionResult Input(InputResponse ir)
         {
@@ -45,7 +55,7 @@ namespace Mission6.Controllers
                 _MovieInputContext.Add(ir);
                 _MovieInputContext.SaveChanges();
 
-                return View();
+                return View("Confirmation", ir);
             }
             else
             {
@@ -56,15 +66,5 @@ namespace Mission6.Controllers
             
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
     }
 }
