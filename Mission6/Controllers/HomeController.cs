@@ -40,10 +40,20 @@ namespace Mission6.Controllers
         [HttpPost]
         public IActionResult Input(InputResponse ir)
         {
-            _MovieInputContext.Add(ir);
-            _MovieInputContext.SaveChanges();
+            if (ModelState.IsValid)
+            {
+                _MovieInputContext.Add(ir);
+                _MovieInputContext.SaveChanges();
 
-            return View();
+                return View();
+            }
+            else
+            {
+                return View(ir);
+            }
+           
+
+            
         }
 
         public IActionResult Privacy()
