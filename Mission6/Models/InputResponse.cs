@@ -17,11 +17,6 @@ namespace Mission6.Models
         [Required]
         public string Year { get; set; }
 
-        // Build Foreign Key
-        [Required]
-        public int CategoryID { get; set; }
-        public Category Category { get; set; }
-
         [Required]
         public string Director { get; set; }
         [Required]
@@ -32,5 +27,9 @@ namespace Mission6.Models
         public string LentTo { get; set; }
         [MaxLength(25)]
         public string Notes { get; set; }
+
+        // Build Foreign Key
+        public int CategoryID { get; set; }
+        public Category Category { get; set; }
     }
 }

@@ -15,15 +15,55 @@ namespace Mission6.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "5.0.17");
 
+            modelBuilder.Entity("Mission6.Models.Category", b =>
+                {
+                    b.Property<int>("CategoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("CategoryName")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("CategoryID");
+
+                    b.ToTable("categories");
+
+                    b.HasData(
+                        new
+                        {
+                            CategoryID = 1,
+                            CategoryName = "Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 2,
+                            CategoryName = "Action and Adventure"
+                        },
+                        new
+                        {
+                            CategoryID = 3,
+                            CategoryName = "Horror"
+                        },
+                        new
+                        {
+                            CategoryID = 4,
+                            CategoryName = "Romantic Comedy"
+                        },
+                        new
+                        {
+                            CategoryID = 5,
+                            CategoryName = "Drama"
+                        });
+                });
+
             modelBuilder.Entity("Mission6.Models.InputResponse", b =>
                 {
                     b.Property<int>("InputID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("CategoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("Director")
                         .IsRequired()
@@ -53,13 +93,15 @@ namespace Mission6.Migrations
 
                     b.HasKey("InputID");
 
+                    b.HasIndex("CategoryID");
+
                     b.ToTable("responses");
 
                     b.HasData(
                         new
                         {
                             InputID = 1,
-                            Category = "Comedy",
+                            CategoryID = 4,
                             Director = "Andy Tennant",
                             Edited = true,
                             LentTo = "None",
@@ -71,7 +113,7 @@ namespace Mission6.Migrations
                         new
                         {
                             InputID = 2,
-                            Category = "Action",
+                            CategoryID = 2,
                             Director = "Doug Liman",
                             Edited = false,
                             Rating = "PG-13",
@@ -81,13 +123,24 @@ namespace Mission6.Migrations
                         new
                         {
                             InputID = 3,
-                            Category = "Action",
+                            CategoryID = 2,
                             Director = "Denis Villeneuve",
                             Edited = false,
                             Rating = "PG-13",
                             Title = "Dune",
                             Year = "2021"
                         });
+                });
+
+            modelBuilder.Entity("Mission6.Models.InputResponse", b =>
+                {
+                    b.HasOne("Mission6.Models.Category", "Category")
+                        .WithMany()
+                        .HasForeignKey("CategoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Category");
                 });
 #pragma warning restore 612, 618
         }

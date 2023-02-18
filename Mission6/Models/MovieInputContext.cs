@@ -13,16 +13,44 @@ namespace Mission6.Models
 
         }
         public DbSet<InputResponse> responses { get; set; }
-
+        public DbSet<Category> categories { get; set; }
         protected override void OnModelCreating(ModelBuilder mb)
         {
+
+            mb.Entity<Category>().HasData(
+                new Category
+                {
+                    CategoryID = 1, CategoryName = "Comedy"
+                },
+                new Category
+                {
+                    CategoryID = 2,
+                    CategoryName = "Action and Adventure"
+                },
+                new Category
+                {
+                    CategoryID = 3,
+                    CategoryName = "Horror"
+                },
+                new Category
+                {
+                    CategoryID = 4,
+                    CategoryName = "Romantic Comedy"
+                },
+                new Category
+                {
+                    CategoryID = 5,
+                    CategoryName = "Drama"
+                }
+                );
+
             mb.Entity<InputResponse>().HasData(
                 new InputResponse
                 {
                     InputID = 1,
                     Title = "Hitch",
                     Year= "2005",
-                    CategoryID= 1,
+                    CategoryID= 4,
                     Director= "Andy Tennant",
                     Rating= "PG-13",
                     Edited = true,
@@ -34,7 +62,7 @@ namespace Mission6.Models
                     InputID = 2,
                     Title = "Bourne Identity",
                     Year = "2002",
-                    CategoryID = 1,
+                    CategoryID = 2,
                     Director = "Doug Liman",
                     Rating = "PG-13"
                 },
@@ -43,7 +71,7 @@ namespace Mission6.Models
                     InputID = 3,
                     Title = "Dune",
                     Year = "2021",
-                    CategoryID = 1,
+                    CategoryID = 2,
                     Director = "Denis Villeneuve",
                     Rating = "PG-13"
                 }

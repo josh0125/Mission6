@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Mission6.Models;
 using System;
@@ -34,7 +35,9 @@ namespace Mission6.Controllers
         // Returns Index
         public IActionResult Table()
         {
-            var applications =_MovieInputContext.responses.ToList();
+            var applications =_MovieInputContext.responses
+                .Include(x => x.Category)
+                .ToList();
             return View(applications);
         }
 
@@ -43,6 +46,10 @@ namespace Mission6.Controllers
         [HttpGet]
         public IActionResult Input()
         {
+
+
+            ViewBag.Categories = _MovieInputContext.categories.ToList();
+
             return View();
         }
 
@@ -59,12 +66,48 @@ namespace Mission6.Controllers
             }
             else
             {
+                ViewBag.Categories = _MovieInputContext.categories.ToList();
+
                 return View(ir);
             }
-           
-
-            
+  
         }
 
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Categories = _MovieInputContext.categories.ToList();
+
+            var application = _MovieInputContext.responses
+                .Single(x => x.InputID == id);
+
+            return View("Input", application);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(InputResponse ir)
+        {
+            _MovieInputContext.responses.Update(ir);
+
+            _MovieInputContext.SaveChanges();
+
+            return RedirectToAction("Table");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var application =_MovieInputContext.responses.Single(x => x.InputID == id);
+            return View("Delete", application);
+        }
+
+        [HttpPost]
+        public IActionResult Delete(InputResponse ir)
+        {
+            _MovieInputContext.responses.Remove(ir);
+            _MovieInputContext.SaveChanges();
+
+            return RedirectToAction("Table");
+        }
     }
 }
