@@ -38,6 +38,7 @@ namespace Mission6.Controllers
             var applications =_MovieInputContext.responses
                 .Include(x => x.Category)
                 .ToList();
+
             return View(applications);
         }
 
@@ -50,7 +51,7 @@ namespace Mission6.Controllers
 
             ViewBag.Categories = _MovieInputContext.categories.ToList();
 
-            return View();
+            return View(new InputResponse());
         }
 
         // Uploads to Database
